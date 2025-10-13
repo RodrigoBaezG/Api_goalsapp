@@ -3,9 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const { expressjwt: jwt } = require('express-jwt');
 
 var indexRouter = require('./routes/index');
 var goalsRouter = require('./routes/goals');
+var accountsRouter = require('./routes/accounts');
+
 
 var app = express();
 
@@ -16,17 +19,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  jwt({
+    secret: "secret",
+    algorithms: ["HS256"],
+  }).unless({ path: ["/api/signup", "/api/login"] })
+);
 
 app.use('/', indexRouter);
 app.use('/api/goals', goalsRouter);
+app.use('/api', accountsRouter);
+
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -34,7 +45,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   console.log(err);
-  res.send('error');
+  res.json({ error: 'Server Error', message: err.message, details: res.locals.error });
 });
 
 module.exports = app;

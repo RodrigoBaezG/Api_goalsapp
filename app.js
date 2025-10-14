@@ -21,8 +21,9 @@ app.listen(PORT, () => {
 const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173'; 
 
 const corsOptions = {
-    origin: frontendURL, 
-    optionsSuccessStatus: 200
+    origin: frontendURL, // ¡Usando la variable!
+    optionsSuccessStatus: 200,
+    credentials: true, // Si usas cookies o sesiones
 };
 
 app.use(cors(corsOptions));

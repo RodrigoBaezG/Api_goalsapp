@@ -20,6 +20,9 @@ app.listen(PORT, () => {
 
 const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173'; 
 
+// CLAVE DE DEBUG: Agrega esta línea
+console.log(`CORS ORIGIN CONFIGURADO A: ${frontendURL}`); 
+
 const corsOptions = {
     origin: frontendURL, // ¡Usando la variable!
     optionsSuccessStatus: 200,

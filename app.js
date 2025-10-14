@@ -40,7 +40,10 @@ app.use(
   jwt({
     secret: "secret",
     algorithms: ["HS256"],
-  }).unless({ path: ["/api/signup", "/api/login"] })
+  }).unless({ 
+      path: ["/api/signup", "/api/login"],
+      method: 'OPTIONS' // <-- CLAVE: Ignorar peticiones OPTIONS
+  })
 );
 
 app.use('/', indexRouter);

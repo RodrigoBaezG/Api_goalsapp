@@ -12,11 +12,6 @@ const config = connectionString
         },
     } 
     : {
-        // Fallback para desarrollo local (usando las variables separadas o localhost)
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        host: 'localhost', // O process.env.DB_HOST
-        port: 5432,
         database: 'goalsapp',
     };;
 

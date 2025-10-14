@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { expressjwt: jwt } = require('express-jwt');
+const PORT = process.env.PORT || 3000;
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var goalsRouter = require('./routes/goals');
@@ -12,7 +14,18 @@ var accountsRouter = require('./routes/accounts');
 
 var app = express();
 
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
+const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173'; 
+
+const corsOptions = {
+    origin: frontendURL, 
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());

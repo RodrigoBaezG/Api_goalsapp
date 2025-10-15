@@ -12,9 +12,11 @@ const config = connectionString
         },
     } 
     : {
+
         database: 'goalsapp',
-    };;
+    };
 
 const db = pgp(config);
 
 module.exports = db;
+

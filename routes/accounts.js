@@ -47,12 +47,13 @@ router.post('/login',
         }
 
         const login = req.body;
-        requestAccount(login.username, (err, [account]) => {
+        requestAccount(login.username, (err, result) => {
             if (err) {
                 return next(err);
             }
+            const [account] = result || []; 
             if (!account) {
-                return res.status(404).send('Account not found');
+                return res.status(401).send('Account not found');
             }
             // Compare password
             bcrypt.compare(login.password, account.hash, function (err, result) {

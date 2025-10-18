@@ -37,7 +37,7 @@ async function setupDatabase() {
                 period_ VARCHAR(50),
                 deadline DATE,
                 completed INTEGER DEFAULT 0,
-                is_completed BOOLEAN DEFAULT FALSE,
+                is_completed BOOLEAN DEFAULT FALSE
             );
         `;
     // Ejecuta el comando SQL. db.none() es ideal para comandos que no devuelven datos.

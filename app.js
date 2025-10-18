@@ -26,6 +26,10 @@ async function setupDatabase() {
                 hash VARCHAR(255) NOT NULL
             );
         `;
+
+    await db.none('DROP TABLE IF EXISTS goals CASCADE;');
+    console.log('Tabla "goals" eliminada (paso temporal).');
+
     const createGoalsTableSQL = `
             CREATE TABLE IF NOT EXISTS goals (
                 id SERIAL PRIMARY KEY,

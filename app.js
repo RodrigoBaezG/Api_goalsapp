@@ -26,10 +26,23 @@ async function setupDatabase() {
                 hash VARCHAR(255) NOT NULL
             );
         `;
+    const createGoalsTableSQL = `
+            CREATE TABLE IF NOT EXISTS goals (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE,
+                title VARCHAR(255) NOT NULL,
+                description TEXT,
+                is_completed BOOLEAN DEFAULT FALSE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        `;
     // Ejecuta el comando SQL. db.none() es ideal para comandos que no devuelven datos.
     // Asumo que tu objeto 'db' es tu instancia de pg-promise.
     await db.none(createTableSQL);
     console.log('Tabla "accounts" verificada y lista.');
+
+    await db.none(createGoalsTableSQL);
+    console.log('Tabla "goals" verificada y lista.');
 
   } catch (error) {
     // Si hay algún problema (ej. error de sintaxis SQL o de conexión), se reporta aquí.

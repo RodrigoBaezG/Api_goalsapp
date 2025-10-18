@@ -30,10 +30,14 @@ async function setupDatabase() {
             CREATE TABLE IF NOT EXISTS goals (
                 id SERIAL PRIMARY KEY,
                 user_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE,
-                title VARCHAR(255) NOT NULL,
-                description TEXT,
+                details VARCHAR(255) NOT NULL,
+                icon TEXT,
+                events INTEGER,
+                goal INTEGER,
+                period_ VARCHAR(50),
+                deadline DATE,
+                completed INTEGER DEFAULT 0,
                 is_completed BOOLEAN DEFAULT FALSE,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `;
     // Ejecuta el comando SQL. db.none() es ideal para comandos que no devuelven datos.

@@ -1,7 +1,7 @@
 const db = require('./config');
 
 function requestAllGoals(table, user_id, callback) {
-    return db.any(`SELECT * FROM ${table} WHERE user_id = ${user_id}`)
+    return db.any('SELECT * FROM $1:name WHERE user_id = $2', [table, user_id])
         .then(data => {
             callback(null, data);
         })

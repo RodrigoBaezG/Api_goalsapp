@@ -70,7 +70,7 @@ router.post('/',
     }
 
     const newGoal = req.body;
-    newGoal.user_id = 1;
+    newGoal.user_id = req.auth.id;
     create('goals', newGoal, (err, newGoal) => {
       if (err) {
         return next(err);

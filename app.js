@@ -67,8 +67,29 @@ const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
 // CLAVE DE DEBUG: Agrega esta línea
 console.log(`CORS ORIGIN CONFIGURADO A: ${frontendURL}`);
 
+const allowedOrigins = [
+  frontendURL, // Ejemplo: https://tudominio.com
+  // ⚠️ AÑADE AQUÍ LA URL POR DEFECTO DE NETLIFY:
+  // (Ejemplo: https://nombre-de-tu-app.netlify.app)
+  'https://rodrigogoals-app.netlify.app',
+
+  // Puedes añadir http://localhost:5173 si lo necesitas para testing en móvil.
+];
+
 const corsOptions = {
-  origin: frontendURL, // ¡Usando la variable!
+  origin: (origin, callback) => {
+    // Si la solicitud no tiene origen (ej: curl, o algunas peticiones internas)
+    if (!origin) return callback(null, true);
+
+    // Si el origen está en nuestra lista, se permite.
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      // De lo contrario, se bloquea por CORS.
+      // console.log(`CORS Blocked: ${origin}`); 
+      callback(new Error(`Not allowed by CORS: ${origin}`));
+    }
+  }, // ¡Usando la variable!
   optionsSuccessStatus: 200,
   credentials: true, // Si usas cookies o sesiones
 };

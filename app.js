@@ -107,9 +107,16 @@ app.use(
   jwt({
     secret: "secret",
     algorithms: ["HS256"],
-  }).unless({
-    path: ["/api/signup", "/api/login"],
-    method: 'OPTIONS' // <-- CLAVE: Ignorar peticiones OPTIONS
+  }).unless((req) => { // 💡 CLAVE: Usamos una función para la exclusión
+
+    // 1. Excluir todas las peticiones OPTIONS (CORS preflight)
+    if (req.method === 'OPTIONS') {
+      return true;
+    }
+
+    // 2. Excluir los caminos públicos para POST (login/signup)
+    const unprotectedPaths = ["/api/signup", "/api/login"];
+    return unprotectedPaths.includes(req.path);
   })
 );
 

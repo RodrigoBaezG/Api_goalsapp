@@ -68,7 +68,7 @@ const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
 console.log(`CORS ORIGIN CONFIGURADO A: ${frontendURL}`);
 
 const corsOptions = {
-  origin: frontendURL, // ¡Usando la variable!
+  origin: '*', // ¡Usando la variable!
   optionsSuccessStatus: 200,
   credentials: true, // Si usas cookies o sesiones
 };

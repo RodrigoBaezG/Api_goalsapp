@@ -27,7 +27,7 @@ router.post('/signup',
                     return next(err);
                 }
                 let token = jwt.sign({
-                    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                    exp: Math.floor(Date.now() / 1000) + (60 * 15),
                     id: account.id
                 }, 'secret');
                 res.status(200).send({ token: token });
